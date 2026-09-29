@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:arxiv="http://arxiv.org/schemas/atom">
+  <title>ArXiv Query</title>
+  <entry>
+    <id>http://arxiv.org/abs/2609.04567v1</id>
+    <published>2026-09-09T17:59:59Z</published>
+    <updated>2026-09-09T17:59:59Z</updated>
+    <title>A 250 solar-mass binary black hole merger in   the fourth observing run</title>
+    <summary>  We report GW260905, the most massive binary black hole merger observed to date...  </summary>
+    <author><name>D. Astronomer</name></author>
+    <author><name>E. Astronomer</name></author>
+    <link href="http://arxiv.org/abs/2609.04567v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/2609.04567v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category term="astro-ph.HE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.HE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.03210v2</id>
+    <published>2026-09-08T09:00:00Z</published>
+    <updated>2026-09-09T12:00:00Z</updated>
+    <title>Room-temperature quantum memory in diamond</title>
+    <summary>A solid-state quantum memory operating at 300 K.</summary>
+    <author><name>F. Physicist</name></author>
+    <link href="http://arxiv.org/abs/2609.03210v2" rel="alternate" type="text/html"/>
+    <arxiv:primary_category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.00001v1</id>
+    <published>2026-08-01T09:00:00Z</published>
+    <updated>2026-08-01T09:00:00Z</updated>
+    <title>Old preprint</title>
+    <summary>Outside the window.</summary>
+    <link href="http://arxiv.org/abs/2608.00001v1" rel="alternate" type="text/html"/>
+    <arxiv:primary_category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+</feed>

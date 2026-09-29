@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>News B</title>
+  <entry>
+    <title>Physicists spot fractional quantum phase in twisted graphene</title>
+    <link rel="alternate" href="https://news-b.test/graphene-phase"/>
+    <id>tag:news-b.test,2026:graphene-phase</id>
+    <published>2026-09-09T14:00:00Z</published>
+    <updated>2026-09-09T14:00:00Z</updated>
+    <summary>A new state of matter in two stacked, twisted sheets of carbon.</summary>
+    <author><name>B. Journalist</name></author>
+  </entry>
+  <entry>
+    <title>Heaviest black hole merger yet detected by gravitational wave observatories</title>
+    <link rel="alternate" href="https://news-b.test/heaviest-merger"/>
+    <id>tag:news-b.test,2026:heaviest-merger</id>
+    <published>2026-09-08T16:00:00Z</published>
+    <updated>2026-09-08T16:00:00Z</updated>
+    <summary>LIGO, Virgo and KAGRA report their biggest event.</summary>
+  </entry>
+</feed>

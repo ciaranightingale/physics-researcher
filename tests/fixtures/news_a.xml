@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+  <title>News A</title>
+  <link>https://news-a.test</link>
+  <item>
+    <title>Twisted graphene reveals a new quantum phase</title>
+    <link>https://www.news-a.test/2026/09/twisted-graphene/?utm_source=rss&amp;utm_medium=rss</link>
+    <pubDate>Wed, 09 Sep 2026 10:00:00 +0000</pubDate>
+    <dc:creator>A. Writer</dc:creator>
+    <description><![CDATA[<p>Researchers have observed a &#8220;fractional&#8221; state in twisted bilayer graphene&nbsp;that could matter for quantum computing.</p>]]></description>
+  </item>
+  <item>
+    <title>Twisted graphene reveals a new quantum phase</title>
+    <link>https://news-a.test/2026/09/twisted-graphene</link>
+    <pubDate>Wed, 09 Sep 2026 10:05:00 +0000</pubDate>
+    <description>Same story listed twice with a different link format.</description>
+  </item>
+  <item>
+    <title>Record-breaking black hole merger spotted by gravitational wave detectors</title>
+    <link>https://news-a.test/2026/09/bh-merger/</link>
+    <pubDate>Mon, 07 Sep 2026 08:30:00 +0000</pubDate>
+    <description>The heaviest merger yet.</description>
+  </item>
+  <item>
+    <title>Our physics reading list for September</title>
+    <link>https://news-a.test/2026/09/roundup/</link>
+    <pubDate>Tue, 08 Sep 2026 09:00:00 +0000</pubDate>
+    <description>Eight papers we loved.</description>
+  </item>
+  <item>
+    <title>An old story outside the window</title>
+    <link>https://news-a.test/2026/08/old/</link>
+    <pubDate>Sat, 01 Aug 2026 08:30:00 +0000</pubDate>
+  </item>
+  <item>
+    <title>A story with no date</title>
+    <link>https://news-a.test/undated/</link>
+  </item>
+</channel>
+</rss>
