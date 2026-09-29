@@ -28,8 +28,10 @@ uvicorn science_scout.app:create_app --factory --port 8000
 
 ## Status
 
-- Built and tested (18 tests) in a sandbox with no internet access. **The feed URLs in `sources.py` have never been fetched for real**: run `check_feeds.py` first and fix any ✗ or ⚠.
-- `USER_AGENT` in `sources.py` still has a placeholder email.
+- Working end to end against the live feeds as of 2026-09-29: all 7 feeds plus arXiv fetch, `get_stories` returns grouped stories with DOIs and linked preprints, 18 tests pass.
+- CERN's old `api/news/news/feed.rss` was dead (404) and is now the site-wide `home.cern/feed/`.
+- **Cross-source grouping is largely unproven in the wild.** A live run produced 57 groups but only one with more than a single item, and that one merged two BBC videos with each other — no two *different* outlets were ever merged. Either the sources genuinely don't overlap much in a 7-day window, or `headline_overlap` is too strict. Worth a look before trusting the dedup.
+- `USER_AGENT` in `sources.py` still has the placeholder `you@example.com`.
 - Not deployed yet. Needs a Docker host with HTTPS and a persistent volume for the SQLite file; host not chosen.
 
 ## Careful

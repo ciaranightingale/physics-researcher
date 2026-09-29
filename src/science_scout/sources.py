@@ -3,8 +3,8 @@
 Tier 1 = primary sources (journals, press offices).
 Tier 2 = trusted science journalism.
 
-These URLs were written from memory and have NOT been tested.
-Run `python scripts/check_feeds.py` and fix any that fail before deploying.
+Verified against the live feeds on 2026-09-29 with `python scripts/check_feeds.py`.
+Re-run it if a source starts reporting errors or goes stale.
 """
 
 from dataclasses import dataclass
@@ -27,7 +27,10 @@ FEEDS: list[FeedSource] = [
     # Tier 1: primary
     FeedSource("nature-physics", "Nature Physics", "https://www.nature.com/nphys.rss", 1, "journal"),
     FeedSource("aps-physics", "APS Physics Magazine", "https://feeds.aps.org/rss/recent/physics.xml", 1, "journal"),
-    FeedSource("cern", "CERN news", "https://home.cern/api/news/news/feed.rss", 1, "press-office"),
+    # Site-wide WordPress feed; the old /api/news/news/feed.rss is gone. Includes some
+    # non-research posts (Courier issues, internal notices) and CERN posts only a few times
+    # a week, so it sits near STALE_AFTER_DAYS. The scout skill filters by topic.
+    FeedSource("cern", "CERN news", "https://home.cern/feed/", 1, "press-office"),
     # Tier 2: journalism
     FeedSource("physics-world", "Physics World", "https://physicsworld.com/feed/", 2, "news"),
     FeedSource("quanta", "Quanta Magazine", "https://www.quantamagazine.org/feed/", 2, "news"),
