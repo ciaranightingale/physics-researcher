@@ -12,6 +12,14 @@ from collections import defaultdict
 from .models import Item, MatchEvidence
 from .normalise import headline_overlap, headline_tokens
 
+# Measured against the real feeds over 7/14/30-day windows on 2026-10-01. In practice this pair of
+# thresholds does same-source de-duplication, not cross-outlet merging: BBC and Physics World each
+# republish an identical or near-identical headline, and those pairs share 4-10 content words.
+# Keep MIN_SHARED_WORDS at 4. Lowering it to 3 collapses recurring programme titles - six separate
+# "BBC Inside Science" episodes share exactly 3 words at overlap 1.00 and would become one story.
+# No cross-source merge fired in any window: these outlets cover the same result months apart in
+# feed order, not days, so the headline path is not what finds shared coverage. The identifier
+# (DOI/arXiv) path is. See tests/test_grouping.py.
 MIN_OVERLAP = 0.6
 MIN_SHARED_WORDS = 4
 _KIND_PRIORITY = {"news": 0, "press-office": 1, "journal": 2, "preprint": 3}

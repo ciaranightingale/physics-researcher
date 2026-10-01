@@ -28,9 +28,11 @@ uvicorn science_scout.app:create_app --factory --port 8000
 
 ## Status
 
-- Working end to end against the live feeds as of 2026-09-29: all 7 feeds plus arXiv fetch, `get_stories` returns grouped stories with DOIs and linked preprints, 18 tests pass.
+- Working end to end against the live feeds as of 2026-09-29: all 7 feeds plus arXiv fetch, `get_stories` returns grouped stories with DOIs and linked preprints. 30 tests pass.
 - CERN's old `api/news/news/feed.rss` was dead (404) and is now the site-wide `home.cern/feed/`.
-- **Cross-source grouping is largely unproven in the wild.** A live run produced 57 groups but only one with more than a single item, and that one merged two BBC videos with each other — no two *different* outlets were ever merged. Either the sources genuinely don't overlap much in a 7-day window, or `headline_overlap` is too strict. Worth a look before trusting the dedup.
+- **Cross-source grouping does not fire, and that looks correct.** Checked over 7/14/30-day windows against the live feeds: zero merges between two different outlets, by either headline or DOI. These sources cover the same result months apart in feed order (APS wrote up the real-valued-quantum-theory paper 83 days before Physics World did), so nothing is there to merge inside a 30-day window. The headline path's real job on these feeds is de-duplicating one outlet against itself, which it does.
+- `MIN_SHARED_WORDS` stays at 4. Lowering it collapses recurring programme titles - six separate "BBC Inside Science" episodes share exactly 3 words at overlap 1.00. `tests/test_grouping.py` pins both directions. `MIN_OVERLAP` is only pinned upward: at 0.5 no test breaks, because the 4-word requirement already rejects the generic pairs.
+- `get_stories` silently ignores unknown arguments (`window_days` instead of `days` returns 7-day data with no error). Worth a look before the scout skill depends on it.
 - `USER_AGENT` in `sources.py` still has the placeholder `you@example.com`.
 - Not deployed yet. Needs a Docker host with HTTPS and a persistent volume for the SQLite file; host not chosen.
 
