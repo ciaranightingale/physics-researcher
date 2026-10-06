@@ -36,28 +36,58 @@ python scripts/check_feeds.py   # fetches your real sources: ✓ working, ⚠ st
 
 Fix any source marked ✗ or ⚠ in `src/science_scout/sources.py`. The stale threshold is `STALE_AFTER_DAYS` in the same file (default 7); try `--stale-days 14` if a slow source keeps tripping it. Also put your email in `USER_AGENT`.
 
-## Run locally
+## Use it (local, stdio)
+
+This is the normal way to run it: Claude Code starts the server itself and talks to it over
+stdin/stdout. Nothing is served over the network.
+
+```sh
+python -m science_scout          # or the installed `science-scout` command
+```
+
+`.mcp.json` in this repo already points Claude Code at the venv interpreter, so `/mcp` should list
+`science-scout` once the venv exists. To check it by hand:
+
+```sh
+npx @modelcontextprotocol/inspector   # choose "STDIO", command: .venv/bin/python, args: -m science_scout
+```
+
+The videos log lives at `~/.local/share/science-scout/scout.db` (override with `DB_PATH`, honours
+`XDG_DATA_HOME`). It is deliberately a fixed absolute path and not relative to the working
+directory: the client chooses that directory, and a relative path would give you a separate log per
+directory, which shows up as "no story is covered yet" rather than as an error.
+
+## Serve it over HTTP instead (optional)
+
+Only needed to reach it from somewhere other than this machine - claude.ai in a browser, or a
+phone. `app.py` is the web app for that:
 
 ```sh
 uvicorn science_scout.app:create_app --factory --port 8000
-npx @modelcontextprotocol/inspector   # choose "Streamable HTTP", URL http://127.0.0.1:8000/mcp
+npx @modelcontextprotocol/inspector   # "Streamable HTTP", URL http://127.0.0.1:8000/mcp
 ```
 
-## Deploy
+## Deploy (optional, not currently done)
 
-Claude connects to custom connectors from Anthropic's cloud, so the server needs a public HTTPS URL. Use any host that runs a Docker container, gives you HTTPS, and offers a **persistent volume** for the SQLite file (Fly.io and Railway both do; check their current pricing). The `Dockerfile` is ready to go.
+Claude connects to custom connectors from Anthropic's cloud, so a connector needs a public HTTPS
+URL. Not needed for local stdio use. Any host that runs a Docker container, gives you HTTPS, and
+offers a **persistent volume** for the SQLite file will do (Fly.io, Railway; check current
+pricing). The `Dockerfile` is ready.
 
 Environment variables:
 
 | Variable | Value |
 |---|---|
 | `PATH_SECRET` | A long random string. The server then only answers on `/mcp/<PATH_SECRET>`. |
-| `ALLOWED_HOSTS` | Your app's hostname, e.g. `science-scout.fly.dev`. |
+| `ALLOWED_HOSTS` | Your app's hostname, e.g. `science-scout.fly.dev`. Defaults to localhost only, so leaving it unset makes every request fail in a way that looks like a broken connector. |
 | `DB_PATH` | Defaults to `/data/scout.db` in the container. Mount the volume at `/data`. |
+
+Run a single instance. The HTTP layer is stateless, but a SQLite file on one volume is not: two
+machines means two different video logs depending on which answers.
 
 ## Connect to Claude
 
-In Claude, go to Customize > Connectors, click **+**, choose **Add custom connector**, and paste `https://<your host>/mcp/<PATH_SECRET>`.
+Only for the hosted case: in Claude, go to Customize > Connectors, click **+**, choose **Add custom connector**, and paste `https://<your host>/mcp/<PATH_SECRET>`. For local use there is nothing to do beyond `.mcp.json`.
 
 ## Notes
 

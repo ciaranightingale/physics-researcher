@@ -10,6 +10,9 @@ dependencies = [
     "uvicorn>=0.30",
 ]
 
+[project.scripts]
+science-scout = "science_scout.__main__:main"
+
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 

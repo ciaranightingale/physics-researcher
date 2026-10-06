@@ -13,7 +13,7 @@ A remote MCP server (Python, official MCP SDK v2) that fetches science news for 
 ## Layout
 
 - `src/science_scout/sources.py`: the source list, arXiv categories, stale threshold, User-Agent. Most day-to-day edits happen here.
-- `server.py`: the five MCP tools. `app.py`: the deployable web app (env: `PATH_SECRET`, `ALLOWED_HOSTS`, `DB_PATH`).
+- `server.py`: the five MCP tools. `__main__.py`: the local stdio entry point, which is how it is actually used. `app.py`: the optional web app for remote use (env: `PATH_SECRET`, `ALLOWED_HOSTS`, `DB_PATH`).
 - `feeds.py`, `arxiv.py`: fetching and parsing. `links.py`: reads article pages for DOIs/arXiv IDs. `grouping.py`: merges coverage of the same story. `store.py`: SQLite (videos log, link cache, group snapshots). `normalise.py`: pure helpers.
 - `tests/`: pytest against fixture files; no network. `scripts/check_feeds.py`: checks the real feeds.
 
@@ -23,7 +23,8 @@ A remote MCP server (Python, official MCP SDK v2) that fetches science news for 
 python -m venv .venv && source .venv/bin/activate && pip install -e ".[dev]"
 pytest
 python scripts/check_feeds.py
-uvicorn science_scout.app:create_app --factory --port 8000
+python -m science_scout                 # local stdio server, as Claude Code runs it
+uvicorn science_scout.app:create_app --factory --port 8000   # only for remote use
 ```
 
 ## Status
@@ -34,7 +35,9 @@ uvicorn science_scout.app:create_app --factory --port 8000
 - `MIN_SHARED_WORDS` stays at 4. Lowering it collapses recurring programme titles - six separate "BBC Inside Science" episodes share exactly 3 words at overlap 1.00. `tests/test_grouping.py` pins both directions. `MIN_OVERLAP` is only pinned upward: at 0.5 no test breaks, because the 4-word requirement already rejects the generic pairs.
 - `get_stories` silently ignores unknown arguments (`window_days` instead of `days` returns 7-day data with no error). Worth a look before the scout skill depends on it.
 - `USER_AGENT` in `sources.py` still has the placeholder `you@example.com`.
-- Not deployed yet. Needs a Docker host with HTTPS and a persistent volume for the SQLite file; host not chosen.
+- **Runs as a local stdio server** (`python -m science_scout`, wired up in `.mcp.json`). Verified over a real MCP client: all five tools listed, and the videos log survives a restart.
+- Hosting is deliberately not done. It is only needed to reach the server from another device, and this is a single-user tool. `app.py` and the `Dockerfile` still work if that changes.
+- The videos log defaults to `~/.local/share/science-scout/scout.db`, an absolute path on purpose: the client picks the working directory, and a relative default would silently give a different log per directory.
 
 ## Careful
 
